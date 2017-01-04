@@ -1,0 +1,13 @@
+" Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
+call plug#begin('~/.vim/plugged')
+
+" Shorthand notation; fetches https://github.com/vim-airline/vim-airline
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" Add plugins to &runtimepath
+call plug#end()
+
+set laststatus=2
+let g:airline#extensions#tabline#enabled = 1
+
