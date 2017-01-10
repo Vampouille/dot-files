@@ -4,10 +4,28 @@ call plug#begin('~/.vim/plugged')
 " Shorthand notation; fetches https://github.com/vim-airline/vim-airline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'airblade/vim-gitgutter'
+Plug 'godlygeek/tabular'
 
 " Add plugins to &runtimepath
 call plug#end()
 
 set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
+set number
+set relativenumber
+highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=LightGrey gui=NONE guifg=DarkGrey guibg=LightGrey
+set cursorline
+highlight CursorLine cterm=NONE ctermbg=LightGrey ctermfg=NONE guibg=LightGrey guifg=NONE
+
+" reduce updatetime for gitgutter
+set updatetime=250
+
+let mapleader=","
+
+" highlight block
+" GitGutterLineHighlightsEnable
+
+let g:airline_theme='solarized'
+
 
