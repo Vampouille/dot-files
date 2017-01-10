@@ -10,3 +10,6 @@
 [submodule "dot-vim/plugged/vim-gitgutter"]
 	path = dot-vim/plugged/vim-gitgutter
 	url = https://github.com/airblade/vim-gitgutter.git
+[submodule "dot-vim/plugged/vim-interestingwords"]
+	path = dot-vim/plugged/vim-interestingwords
+	url = https://github.com/lfv89/vim-interestingwords.git
