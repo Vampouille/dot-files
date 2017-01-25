@@ -33,6 +33,6 @@ set wildmode=list:longest,full
 
 " Map interesting words function
 nmap <F5> :call InterestingWords('n')<cr>
-nmap <F6> :call WordNavigation(0)<cr>
-nmap <F7> :call WordNavigation(1)<cr>
+nmap <F6> :call WordNavigation(0)<cr>zz
+nmap <F7> :call WordNavigation(1)<cr>zz
 nmap <F8> :call UncolorAllWords()<cr>
