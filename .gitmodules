@@ -13,3 +13,6 @@
 [submodule "dot-vim/plugged/vim-interestingwords"]
 	path = dot-vim/plugged/vim-interestingwords
 	url = https://github.com/lfv89/vim-interestingwords.git
+[submodule "dot-oh-my-zsh"]
+	path = dot-oh-my-zsh
+	url = https://github.com/robbyrussell/oh-my-zsh.git
