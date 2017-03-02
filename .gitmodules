@@ -16,3 +16,6 @@
 [submodule "dot-oh-my-zsh"]
 	path = dot-oh-my-zsh
 	url = https://github.com/robbyrussell/oh-my-zsh.git
+[submodule "dot-vim/plugged/vim-surround"]
+	path = dot-vim/plugged/vim-surround
+	url = https://github.com/tpope/vim-surround.git
