@@ -19,3 +19,6 @@
 [submodule "dot-vim/plugged/vim-surround"]
 	path = dot-vim/plugged/vim-surround
 	url = https://github.com/tpope/vim-surround.git
+[submodule "dot-zsh/zsh-autosuggestions"]
+	path = dot-zsh/zsh-autosuggestions
+	url = git://github.com/zsh-users/zsh-autosuggestions
