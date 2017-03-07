@@ -1,24 +1,6 @@
-[submodule "dot-vim/plugged/vim-airline"]
-	path = dot-vim/plugged/vim-airline
-	url = https://github.com/vim-airline/vim-airline.git
-[submodule "dot-vim/plugged/vim-airline-themes"]
-	path = dot-vim/plugged/vim-airline-themes
-	url = https://github.com/vim-airline/vim-airline-themes.git
-[submodule "dot-vim/plugged/tabular"]
-	path = dot-vim/plugged/tabular
-	url = https://github.com/godlygeek/tabular.git
-[submodule "dot-vim/plugged/vim-gitgutter"]
-	path = dot-vim/plugged/vim-gitgutter
-	url = https://github.com/airblade/vim-gitgutter.git
-[submodule "dot-vim/plugged/vim-interestingwords"]
-	path = dot-vim/plugged/vim-interestingwords
-	url = https://github.com/lfv89/vim-interestingwords.git
 [submodule "dot-oh-my-zsh"]
 	path = dot-oh-my-zsh
 	url = https://github.com/robbyrussell/oh-my-zsh.git
-[submodule "dot-vim/plugged/vim-surround"]
-	path = dot-vim/plugged/vim-surround
-	url = https://github.com/tpope/vim-surround.git
 [submodule "dot-zsh/zsh-autosuggestions"]
 	path = dot-zsh/zsh-autosuggestions
 	url = git://github.com/zsh-users/zsh-autosuggestions
