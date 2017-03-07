@@ -8,6 +8,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'godlygeek/tabular'
 Plug 'lfv89/vim-interestingwords'
 Plug 'tpope/vim-surround'
+Plug 'ctrlpvim/ctrlp.vim'
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -24,6 +25,9 @@ highlight CursorLine cterm=NONE ctermbg=LightGrey ctermfg=NONE guibg=LightGrey g
 set updatetime=250
 
 let mapleader=","
+
+" allow buffer switch without saving
+set hidden
 
 " highlight block
 " GitGutterLineHighlightsEnable
