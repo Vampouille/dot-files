@@ -85,6 +85,8 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+alias ll='exa -lhg@ --git'
+
 #eval "$(fasd --init auto)"
 #source /usr/local/bin/fasd
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
