@@ -10,6 +10,8 @@ Plug 'lfv89/vim-interestingwords'
 Plug 'tpope/vim-surround'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'nvie/vim-flake8'
+Plug 'tmhedberg/matchit'
+Plug 'Vimjas/vim-python-pep8-indent'
 
 " Add plugins to &runtimepath
 call plug#end()
