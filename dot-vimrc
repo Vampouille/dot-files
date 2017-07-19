@@ -20,6 +20,7 @@ set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
 set number
 set relativenumber
+set mouse+=a
 highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=LightGrey gui=NONE guifg=DarkGrey guibg=LightGrey
 set cursorline
 highlight CursorLine cterm=NONE ctermbg=LightGrey ctermfg=NONE guibg=LightGrey guifg=NONE
