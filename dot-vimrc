@@ -65,6 +65,7 @@ nmap <leader>c :CtrlPFunky<CR>
 " Display hidden chars
 nmap <leader>i :set list!<CR>
 set listchars=tab:→\ ,eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨
+nmap <leader>l :set nu!<CR> :set relativenumber!<CR>
 
 " Configure indentation
 set shiftwidth=4
