@@ -2,6 +2,9 @@
 export PATH=$HOME/bin:/usr/local/bin:./node_modules/.bin/:$PATH
 # export PATH=$HOME/git/georchestra/ldapadmin/node:$PATH
 
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+#export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/
+
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
