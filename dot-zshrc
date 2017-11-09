@@ -88,8 +88,9 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias ll='exa -lhg@ --git'
-
+# alias ll='exa -lhg@ --git'
+alias rancher-dev=rancher --config ${HOME}/.rancher/cli-caas-dev.camptocamp.com.json
+alias rancher-prod=rancher --config=~/.rancher/cli-caas.camptocamp.com.json
 #eval "$(fasd --init auto)"
 #source /usr/local/bin/fasd
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh

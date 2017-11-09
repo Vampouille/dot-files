@@ -22,10 +22,11 @@ let g:airline#extensions#tabline#enabled = 1
 set number
 set relativenumber
 set mouse+=a
+set ttymouse=xterm2
 highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=LightGrey gui=NONE guifg=DarkGrey guibg=LightGrey
 set cursorline
 highlight CursorLine cterm=NONE ctermbg=LightGrey ctermfg=NONE guibg=LightGrey guifg=NONE
-highlight DiffText cterm=bold ctermfg=10 ctermbg=182 gui=none guifg=none guibg=Green
+highlight DiffText cterm=bold ctermfg=10 ctermbg=182 gui=NONE guifg=NONE guibg=Green
 
 " reduce updatetime for gitgutter
 set updatetime=250
