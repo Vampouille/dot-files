@@ -55,7 +55,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git common-aliases docker fasd mvn)
+plugins=(git common-aliases docker fasd mvn terraform)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -88,10 +88,12 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# alias ll='exa -lhg@ --git'
+if [ "$HOST" = "wrk43" ]; then
+  alias ll='exa -lhg@ --git'
+fi
 alias rancher-dev=rancher --config ${HOME}/.rancher/cli-caas-dev.camptocamp.com.json
 alias rancher-prod=rancher --config=~/.rancher/cli-caas.camptocamp.com.json
 #eval "$(fasd --init auto)"
 #source /usr/local/bin/fasd
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-
+unsetopt share_history
