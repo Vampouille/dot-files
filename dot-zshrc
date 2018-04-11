@@ -98,3 +98,6 @@ alias rancher-prod=rancher --config=~/.rancher/cli-caas.camptocamp.com.json
 #source /usr/local/bin/fasd
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 unsetopt share_history
+
+source <(oc completion zsh)
+source <(helm completion zsh)

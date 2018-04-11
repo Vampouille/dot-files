@@ -13,6 +13,8 @@ Plug 'nvie/vim-flake8'
 Plug 'tmhedberg/matchit'
 Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'tpope/vim-fugitive'
+" Provide :XtermColorTable command
+Plug 'guns/xterm-color-table.vim'
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -28,6 +30,8 @@ highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=LightGrey gui=NON
 set cursorline
 highlight CursorLine cterm=NONE ctermbg=LightGrey ctermfg=NONE guibg=LightGrey guifg=NONE
 highlight DiffText cterm=bold ctermfg=10 ctermbg=182 gui=NONE guifg=NONE guibg=Green
+set hlsearch
+highlight Search ctermfg=151 ctermbg=10
 set undofile
 
 " reduce updatetime for gitgutter
@@ -101,4 +105,5 @@ nmap <leader>p <Plug>GitGutterPreviewHunk
 
 " Configure line length for markdown
 au BufRead,BufNewFile *.md setlocal textwidth=80
+au BufRead,BufNewFile *.es6 set syntax=javascript
 
