@@ -101,3 +101,4 @@ unsetopt share_history
 
 source <(oc completion zsh)
 source <(helm completion zsh)
+source <(gopass completion zsh)
