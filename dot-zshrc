@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:./node_modules/.bin/:$PATH
+export PATH=$HOME/bin:/usr/local/bin:/usr/local/go/bin:$HOME/go/bin:./node_modules/.bin/:$PATH
 # export PATH=$HOME/git/georchestra/ldapadmin/node:$PATH
 
 #export JAVA_HOME=/usr/lib/jvm/java-9-openjdk-amd64
