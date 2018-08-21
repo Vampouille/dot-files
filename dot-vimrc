@@ -13,9 +13,12 @@ Plug 'nvie/vim-flake8'
 Plug 'tmhedberg/matchit'
 Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'tpope/vim-fugitive'
+Plug 'scrooloose/nerdtree'
 " Provide :XtermColorTable command
 Plug 'guns/xterm-color-table.vim'
 Plug 'rodjek/vim-puppet'
+" Require Vim 8
+"Plug 'w0rp/ale'
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -85,6 +88,7 @@ set expandtab
 
 nmap <leader>2 :set shiftwidth=2<CR>:set tabstop=2<CR>:set softtabstop=2<CR>:set expandtab<CR>
 nmap <leader>4 :set shiftwidth=4<CR>:set tabstop=4<CR>:set softtabstop=4<CR>:set expandtab<CR>
+nmap <leader>8 :set shiftwidth=8<CR>:set tabstop=8<CR>:set softtabstop=8<CR>:set expandtab<CR>
 
 " Configure flake8
 let no_flake8_maps = 1
@@ -97,6 +101,11 @@ highlight link Flake8_Naming     WarningMsg
 highlight link Flake8_PyFlake    WarningMsg
 autocmd FileType python map <buffer> <leader>f :call Flake8()<CR>
 
+" Configure ALE
+" nnoremap <leader>F :ALEFix<CR>
+" let g:ale_linters = { 'javascript': ['standard'], 'css': ['stylelint'] }
+" let g:ale_fixers = { 'javascript': ['standard'], 'css': ['stylelint'] }
+
 " Configure gutter shortcut
 map <F10> <Plug>GitGutterNextHunk
 map <F9> <Plug>GitGutterPrevHunk
@@ -108,3 +117,7 @@ nmap <leader>p <Plug>GitGutterPreviewHunk
 au BufRead,BufNewFile *.md setlocal textwidth=80
 au BufRead,BufNewFile *.es6 set syntax=javascript
 
+:command RemoveTraillingSpaces %s/\s\+$//e
+"
+" Configure nerdtree
+map <leader>t :NERDTreeToggle<CR>
