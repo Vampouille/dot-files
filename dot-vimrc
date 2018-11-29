@@ -17,8 +17,13 @@ Plug 'scrooloose/nerdtree'
 " Provide :XtermColorTable command
 Plug 'guns/xterm-color-table.vim'
 Plug 'rodjek/vim-puppet'
-" Require Vim 8
-"Plug 'w0rp/ale'
+Plug 'w0rp/ale'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'fatih/vim-go'
+Plug 'altercation/vim-colors-solarized'
+Plug 'c9s/vikube.vim'
+Plug 'ervandew/supertab'
+Plug 'raimondi/delimitmate'
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -101,10 +106,6 @@ highlight link Flake8_Naming     WarningMsg
 highlight link Flake8_PyFlake    WarningMsg
 autocmd FileType python map <buffer> <leader>f :call Flake8()<CR>
 
-" Configure ALE
-" nnoremap <leader>F :ALEFix<CR>
-" let g:ale_linters = { 'javascript': ['standard'], 'css': ['stylelint'] }
-" let g:ale_fixers = { 'javascript': ['standard'], 'css': ['stylelint'] }
 
 " Configure gutter shortcut
 map <F10> <Plug>GitGutterNextHunk
@@ -121,3 +122,16 @@ au BufRead,BufNewFile *.es6 set syntax=javascript
 "
 " Configure nerdtree
 map <leader>t :NERDTreeToggle<CR>
+
+" Configure ALE
+let g:ale_completion_enabled = 1
+let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'], 'puppet': ['puppetlint'], 'javascript': ['eslint']}
+let g:ale_fix_on_save = 1
+let g:airline#extensions#ale#enabled = 1
+nnoremap <leader>F :ALEFix<CR>
+" let g:ale_linters = { 'javascript': ['standard'], 'css': ['stylelint'] }
+" let g:ale_fixers = { 'javascript': ['standard'], 'css': ['stylelint'] }
+
+" Configure vim-colors-solarized
+set background=light
+colorscheme solarized
