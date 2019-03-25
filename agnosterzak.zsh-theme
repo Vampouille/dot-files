@@ -75,6 +75,16 @@ prompt_context() {
   fi
 }
 
+# Summon status, Do we have summon running
+prompt_summon(){
+  if [[ "$SUMMON_SESSION" = "true" ]]; then
+    prompt_segment 1 white "☢ ${SUMMON_SECRET_PATH/#$HOME/~}"
+    prompt_end
+    print -n "\n"
+    CURRENT_BG='253'
+  fi
+}
+
 # Battery Level
 prompt_battery() {
   HEART='♥ '
@@ -363,6 +373,7 @@ build_prompt() {
   prompt_end
   CURRENT_BG='NONE'
   print -n "\n"
+  prompt_summon
   prompt_context
   prompt_end
 }
