@@ -106,6 +106,7 @@ alias rancher-prod=rancher --config=~/.rancher/cli-caas.camptocamp.com.json
 alias terraform="summon terraform"
 export TF_VAR_key_pair=jacroute
 alias tf=terraform
+alias summon='SUMMON_SESSION=true SUMMON_SECRET_PATH=$(pwd) summon'
 #eval "$(fasd --init auto)"
 #source /usr/local/bin/fasd
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
