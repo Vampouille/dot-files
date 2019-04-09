@@ -115,3 +115,5 @@ unsetopt share_history
 source <(oc completion zsh)
 source <(helm completion zsh)
 source <(gopass completion zsh)
+
+export HELM_TILLER_STORAGE=configmap
