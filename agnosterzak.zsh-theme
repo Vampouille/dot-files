@@ -78,7 +78,13 @@ prompt_context() {
 # Summon status, Do we have summon running
 prompt_summon(){
   if [[ "$SUMMON_SESSION" = "true" ]]; then
+    if [[ `pwd` != ${SUMMON_SECRET_PATH} ]]; then
+      echo -e -n "\033[5m"
+    fi
     prompt_segment 1 white "☢ ${SUMMON_SECRET_PATH/#$HOME/~}"
+    if [[ `pwd` != ${SUMMON_SECRET_PATH} ]]; then
+      echo -e -n "\033[0m"
+    fi
     prompt_end
     print -n "\n"
     CURRENT_BG='253'
