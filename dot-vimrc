@@ -24,6 +24,7 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'c9s/vikube.vim'
 Plug 'ervandew/supertab'
 Plug 'raimondi/delimitmate'
+Plug 'davidhalter/jedi-vim'
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -64,15 +65,15 @@ nmap <F6> :call WordNavigation(0)<cr>zz
 nmap <F7> :call WordNavigation(1)<cr>zz
 nmap <F8> :call UncolorAllWords()<cr>
 
-noremap <Up> <nop>
-noremap <Down> <nop>
-noremap <Left> <nop>
-noremap <Right> <nop>
+"noremap <Up> <nop>
+"noremap <Down> <nop>
+"noremap <Left> <nop>
+"noremap <Right> <nop>
 
-inoremap <Up> <nop>
-inoremap <Down> <nop>
-inoremap <Left> <nop>
-inoremap <Right> <nop>
+"inoremap <Up> <nop>
+"inoremap <Down> <nop>
+"inoremap <Left> <nop>
+"inoremap <Right> <nop>
 
 " Map CtrlP functions
 
