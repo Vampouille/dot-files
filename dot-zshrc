@@ -117,3 +117,5 @@ source <(helm completion zsh)
 source <(gopass completion zsh)
 
 export HELM_TILLER_STORAGE=configmap
+
+source /home/jacroute/.local/bin/aws_bash_completer
