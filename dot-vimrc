@@ -37,12 +37,21 @@ set relativenumber
 set scrolloff=5
 set mouse+=a
 set ttymouse=xterm2
-highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=LightGrey gui=NONE guifg=DarkGrey guibg=LightGrey
+
+" Configure vim-colors-solarized
+set background=dark
+colorscheme solarized
+
+"highlight LineNr term=bold cterm=NONE ctermfg=LightGrey ctermbg=DarkGrey gui=NONE guifg=LightGrey guibg=DarkGrey
 set cursorline
-highlight CursorLine cterm=NONE ctermbg=LightGrey ctermfg=NONE guibg=LightGrey guifg=NONE
-highlight DiffText cterm=bold ctermfg=10 ctermbg=182 gui=NONE guifg=NONE guibg=Green
+"highlight CursorLine cterm=NONE ctermbg=DarkGrey ctermfg=NONE guibg=DarkGrey guifg=NONE
+"highlight DiffText cterm=bold ctermfg=10 ctermbg=182 gui=NONE guifg=NONE guibg=Green
 set hlsearch
-highlight Search ctermfg=151 ctermbg=10
+"highlight Search ctermfg=151 ctermbg=10
+
+
+
+
 set undofile
 
 " reduce updatetime for gitgutter
@@ -136,7 +145,3 @@ let g:airline#extensions#ale#enabled = 1
 nnoremap <leader>F :ALEFix<CR>
 " let g:ale_linters = { 'javascript': ['standard'], 'css': ['stylelint'] }
 " let g:ale_fixers = { 'javascript': ['standard'], 'css': ['stylelint'] }
-
-" Configure vim-colors-solarized
-set background=light
-colorscheme solarized
