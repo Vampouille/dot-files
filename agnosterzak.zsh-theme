@@ -6,12 +6,19 @@
 # # README
 #
 # In order for this theme to render correctly, you will need a
-# [Powerline-patched font](https://gist.github.com/1595572).
+# [Powerline-patched font](https://github.com/Lokaltog/powerline-fonts).
+# Make sure you have a recent version: the code points that Powerline
+# uses changed in 2012, and older versions will display incorrectly,
+# in confusing ways.
 #
 # In addition, I recommend the
 # [Solarized theme](https://github.com/altercation/solarized/) and, if you're
 # using it on Mac OS X, [iTerm 2](http://www.iterm2.com/) over Terminal.app -
 # it has significantly better color fidelity.
+#
+# If using with "light" variant of the Solarized color schema, set
+# SOLARIZED_THEME variable to "light". If you don't specify, we'll assume
+# you're using the "dark" variant.
 #
 # # Goals
 #
@@ -27,8 +34,28 @@
 
 CURRENT_BG='NONE'
 
+case ${SOLARIZED_THEME:-dark} in
+    light) CURRENT_FG='white';;
+    *)     CURRENT_FG='black';;
+esac
+
+# Special Powerline characters
+
+() {
+  local LC_ALL="" LC_CTYPE="en_US.UTF-8"
+  # NOTE: This segment separator character is correct.  In 2012, Powerline changed
+  # the code points they use for their special characters. This is the new code point.
+  # If this is not working for you, you probably have an old version of the
+  # Powerline-patched fonts installed. Download and install the new version.
+  # Do not submit PRs to change this unless you have reviewed the Powerline code point
+  # history and have new information.
+  # This is defined using a Unicode escape sequence so it is unambiguously readable, regardless of
+  # what font the user is viewing this source code in. Do not replace the
+  # escape sequence with a single literal character.
+  # Do not change this! Do not make it '\u2b80'; that is the old, wrong code point.
+  SEGMENT_SEPARATOR=$'\ue0b0'
+}
 # Characters
-SEGMENT_SEPARATOR="\ue0b0"
 PLUSMINUS="\u00b1"
 BRANCH="\ue0a0"
 DETACHED="\u27a6"
@@ -44,22 +71,22 @@ prompt_segment() {
   [[ -n $1 ]] && bg="%K{$1}" || bg="%k"
   [[ -n $2 ]] && fg="%F{$2}" || fg="%f"
   if [[ $CURRENT_BG != 'NONE' && $1 != $CURRENT_BG ]]; then
-    print -n " %{$bg%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR%{$fg%} "
+    echo -n " %{$bg%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR%{$fg%} "
   else
-    print -n "%{$bg%}%{$fg%} "
+    echo -n "%{$bg%}%{$fg%} "
   fi
   CURRENT_BG=$1
-  [[ -n $3 ]] && print -n $3
+  [[ -n $3 ]] && echo -n $3
 }
 
 # End the prompt, closing any open segments
 prompt_end() {
   if [[ -n $CURRENT_BG ]]; then
-    print -n " %{%k%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR"
+    echo -n " %{%k%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR"
   else
-    print -n "%{%k%}"
+    echo -n "%{%k%}"
   fi
-  print -n "%{%f%}"
+  echo -n "%{%f%}"
   CURRENT_BG=''
 }
 
@@ -68,12 +95,12 @@ prompt_end() {
 
 # Context: user@hostname (who am I and where am I)
 prompt_context() {
-  if [[ -n "$SSH_CLIENT" ]]; then
-    prompt_segment magenta white "%{$fg_bold[white]%(!.%{%F{white}%}.)%}$USER@%m%{$fg_no_bold[white]%}"
-  else
-    prompt_segment 253 black "%{$fg_bold[0]%(!.%{%F{magenta}%}.)%}$USER@%m%{$fg_no_bold[magenta]%}"
+  if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
+    prompt_segment 10 7 "%(!.%{%F{yellow}%}.)%n@%m"
   fi
 }
+#    prompt_segment magenta white "%{$fg_bold[white]%(!.%{%F{white}%}.)%}$USER@%m%{$fg_no_bold[white]%}"
+#    prompt_segment 253 black "%{$fg_bold[0]%(!.%{%F{magenta}%}.)%}$USER@%m%{$fg_no_bold[magenta]%}"
 
 # Summon status, Do we have summon running
 prompt_summon(){
@@ -185,105 +212,26 @@ prompt_battery() {
 
 # Git: branch/detached head, dirty status
 prompt_git() {
-#«»±˖˗‑‐‒ ━ ✚‐↔←↑↓→↭⇎⇔⋆━◂▸◄►◆☀★☗☊✔✖❮❯⚑⚙
+  (( $+commands[git] )) || return
+  if [[ "$(git config --get oh-my-zsh.hide-status 2>/dev/null)" = 1 ]]; then
+    return
+  fi
   local PL_BRANCH_CHAR
   () {
     local LC_ALL="" LC_CTYPE="en_US.UTF-8"
-    PL_BRANCH_CHAR="$BRANCH"
+    PL_BRANCH_CHAR=$'\ue0a0'         # 
   }
-  local ref dirty mode repo_path clean has_upstream
-  local modified untracked added deleted tagged stashed
-  local ready_commit git_status bgclr fgclr
-  local commits_diff commits_ahead commits_behind has_diverged to_push to_pull
-
-  repo_path=$(git rev-parse --git-dir 2>/dev/null)
+  local ref dirty mode repo_path
 
   if $(git rev-parse --is-inside-work-tree >/dev/null 2>&1); then
+    repo_path=$(git rev-parse --git-dir 2>/dev/null)
     dirty=$(parse_git_dirty)
-    git_status=$(git status --porcelain 2> /dev/null)
     ref=$(git symbolic-ref HEAD 2> /dev/null) || ref="➦ $(git rev-parse --short HEAD 2> /dev/null)"
     if [[ -n $dirty ]]; then
-      clean=''
-      bgclr='yellow'
-      fgclr='0'
+      prompt_segment yellow black
     else
-      clean=' ✔'
-      bgclr='green'
-      fgclr='0'
+      prompt_segment green $CURRENT_FG
     fi
-
-    local upstream=$(git rev-parse --symbolic-full-name --abbrev-ref @{upstream} 2> /dev/null)
-    if [[ -n "${upstream}" && "${upstream}" != "@{upstream}" ]]; then has_upstream=true; fi
-
-    local current_commit_hash=$(git rev-parse HEAD 2> /dev/null)
-
-    local number_of_untracked_files=$(\grep -c "^??" <<< "${git_status}")
-    # if [[ $number_of_untracked_files -gt 0 ]]; then untracked=" $number_of_untracked_files◆"; fi
-    if [[ $number_of_untracked_files -gt 0 ]]; then untracked=" $number_of_untracked_files☀"; fi
-
-    local number_added=$(\grep -c "^A" <<< "${git_status}")
-    if [[ $number_added -gt 0 ]]; then added=" $number_added✚"; fi
-
-    local number_modified=$(\grep -c "^.M" <<< "${git_status}")
-    if [[ $number_modified -gt 0 ]]; then
-      modified=" $number_modified●"
-      bgclr='3'
-      fgclr='0'
-    fi
-
-    local number_added_modified=$(\grep -c "^M" <<< "${git_status}")
-    local number_added_renamed=$(\grep -c "^R" <<< "${git_status}")
-    if [[ $number_modified -gt 0 && $number_added_modified -gt 0 ]]; then
-      modified="$modified$((number_added_modified+number_added_renamed))±"
-    elif [[ $number_added_modified -gt 0 ]]; then
-      modified=" ●$((number_added_modified+number_added_renamed))±"
-    fi
-
-    local number_deleted=$(\grep -c "^.D" <<< "${git_status}")
-    if [[ $number_deleted -gt 0 ]]; then
-      deleted=" $number_deleted‒"
-      bgclr='red'
-      fgclr='0'
-    fi
-
-    local number_added_deleted=$(\grep -c "^D" <<< "${git_status}")
-    if [[ $number_deleted -gt 0 && $number_added_deleted -gt 0 ]]; then
-      deleted="$deleted$number_added_deleted±"
-    elif [[ $number_added_deleted -gt 0 ]]; then
-      deleted=" ‒$number_added_deleted±"
-    fi
-
-    local tag_at_current_commit=$(git describe --exact-match --tags $current_commit_hash 2> /dev/null)
-    if [[ -n $tag_at_current_commit ]]; then tagged=" ☗$tag_at_current_commit "; fi
-
-    local number_of_stashes="$(git stash list -n1 2> /dev/null | wc -l)"
-    if [[ $number_of_stashes -gt 0 ]]; then
-      stashed=" ${number_of_stashes##*(  )}⚙"
-      bgclr='3'
-      fgclr='0'
-    fi
-
-    if [[ $number_added -gt 0 || $number_added_modified -gt 0 || $number_added_deleted -gt 0 ]]; then ready_commit=' ⚑'; fi
-
-    local upstream_prompt=''
-    if [[ $has_upstream == true ]]; then
-      commits_diff="$(git log --pretty=oneline --topo-order --left-right ${current_commit_hash}...${upstream} 2> /dev/null)"
-      commits_ahead=$(\grep -c "^<" <<< "$commits_diff")
-      commits_behind=$(\grep -c "^>" <<< "$commits_diff")
-      upstream_prompt="$(git rev-parse --symbolic-full-name --abbrev-ref @{upstream} 2> /dev/null)"
-      upstream_prompt=$(sed -e 's/\/.*$/ ☊ /g' <<< "$upstream_prompt")
-    fi
-
-    has_diverged=false
-    if [[ $commits_ahead -gt 0 && $commits_behind -gt 0 ]]; then has_diverged=true; fi
-    if [[ $has_diverged == false && $commits_ahead -gt 0 ]]; then
-      if [[ $bgclr == 'red' || $bgclr == 'magenta' ]] then
-        to_push=" $fg_bold[0]↑$commits_ahead$fg_bold[$fgclr]"
-      else
-        to_push=" $fg_bold[black]↑$commits_ahead$fg_bold[$fgclr]"
-      fi
-    fi
-    if [[ $has_diverged == false && $commits_behind -gt 0 ]]; then to_pull=" $fg_bold[0]↓$commits_behind$fg_bold[$fgclr]"; fi
 
     if [[ -e "${repo_path}/BISECT_LOG" ]]; then
       mode=" <B>"
@@ -293,14 +241,45 @@ prompt_git() {
       mode=" >R>"
     fi
 
-    prompt_segment $bgclr $fgclr
+    setopt promptsubst
+    autoload -Uz vcs_info
 
-    print -n "%{$fg_bold[$fgclr]%}${ref/refs\/heads\//$PL_BRANCH_CHAR $upstream_prompt}${mode}$to_push$to_pull$clean$tagged$stashed$untracked$modified$deleted$added$ready_commit%{$fg_no_bold[$fgclr]%}"
+    zstyle ':vcs_info:*' enable git
+    zstyle ':vcs_info:*' get-revision true
+    zstyle ':vcs_info:*' check-for-changes true
+    zstyle ':vcs_info:*' stagedstr '✚'
+    zstyle ':vcs_info:*' unstagedstr '●'
+    zstyle ':vcs_info:*' formats ' %u%c'
+    zstyle ':vcs_info:*' actionformats ' %u%c'
+    vcs_info
+    echo -n "${ref/refs\/heads\//$PL_BRANCH_CHAR }${vcs_info_msg_0_%% }${mode}"
   fi
 }
 
+prompt_bzr() {
+    (( $+commands[bzr] )) || return
+    if (bzr status >/dev/null 2>&1); then
+        status_mod=`bzr status | head -n1 | grep "modified" | wc -m`
+        status_all=`bzr status | head -n1 | wc -m`
+        revision=`bzr log | head -n2 | tail -n1 | sed 's/^revno: //'`
+        if [[ $status_mod -gt 0 ]] ; then
+            prompt_segment yellow black
+            echo -n "bzr@"$revision "✚ "
+        else
+            if [[ $status_all -gt 0 ]] ; then
+                prompt_segment yellow black
+                echo -n "bzr@"$revision
+            else
+                prompt_segment green black
+                echo -n "bzr@"$revision
+            fi
+        fi
+    fi
+}
+
 prompt_hg() {
-  local rev status
+  (( $+commands[hg] )) || return
+  local rev st branch
   if $(hg id >/dev/null 2>&1); then
     if $(hg prompt >/dev/null 2>&1); then
       if [[ $(hg prompt "{status|unknown}") = "?" ]]; then
@@ -313,9 +292,9 @@ prompt_hg() {
         st='±'
       else
         # if working copy is clean
-        prompt_segment green black
+        prompt_segment green $CURRENT_FG
       fi
-      print -n $(hg prompt "☿ {rev}@{branch}") $st
+      echo -n $(hg prompt "☿ {rev}@{branch}") $st
     else
       st=""
       rev=$(hg id -n 2>/dev/null | sed 's/[^-0-9]//g')
@@ -327,16 +306,17 @@ prompt_hg() {
         prompt_segment yellow black
         st='±'
       else
-        prompt_segment green black
+        prompt_segment green $CURRENT_FG
       fi
-      print -n "☿ $rev@$branch" $st
+      echo -n "☿ $rev@$branch" $st
     fi
   fi
 }
 
 # Dir: current working directory
 prompt_dir() {
-  prompt_segment 4 0 "%{$fg_bold[0]%}%~%{$fg_no_bold[0]%}"
+  prompt_segment blue $CURRENT_FG '%~'
+  #prompt_segment 4 0 "%{$fg_bold[0]%}%~%{$fg_no_bold[0]%}"
 }
 
 # Virtualenv: current working virtualenv
@@ -356,13 +336,26 @@ prompt_time() {
 # - am I root
 # - are there background jobs?
 prompt_status() {
-  local symbols
-  symbols=()
-  [[ $RETVAL -ne 0 ]] && symbols+="%{%F{red}%}$CROSS"
-  [[ $UID -eq 0 ]] && symbols+="%{%F{yellow}%}$LIGHTNING"
-  [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="%{%F{cyan}%}$GEAR"
+  local -a symbols
+
+  [[ $RETVAL -ne 0 ]] && symbols+="%{%F{red}%}✘"
+  [[ $UID -eq 0 ]] && symbols+="%{%F{yellow}%}⚡"
+  [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="%{%F{cyan}%}⚙"
 
   [[ -n "$symbols" ]] && prompt_segment black default "$symbols"
+}
+
+#AWS Profile:
+# - display current AWS_PROFILE name
+# - displays yellow on red if profile name contains 'production' or
+#   ends in '-prod'
+# - displays black on green otherwise
+prompt_aws() {
+  [[ -z "$AWS_PROFILE" ]] && return
+  case "$AWS_PROFILE" in
+    *-prod|*production*) prompt_segment red yellow  "AWS: $AWS_PROFILE" ;;
+    *) prompt_segment green black "AWS: $AWS_PROFILE" ;;
+  esac
 }
 
 ## Main prompt
@@ -373,12 +366,14 @@ build_prompt() {
   prompt_battery
 #  prompt_time
   prompt_virtualenv
+  prompt_aws
   prompt_dir
   prompt_git
+  prompt_bzr
   prompt_hg
   prompt_end
-  CURRENT_BG='NONE'
   print -n "\n"
+  CURRENT_BG='NONE'
   prompt_summon
   prompt_context
   prompt_end
