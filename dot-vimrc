@@ -25,6 +25,7 @@ Plug 'c9s/vikube.vim'
 Plug 'ervandew/supertab'
 Plug 'raimondi/delimitmate'
 Plug 'davidhalter/jedi-vim'
+Plug 'dhruvasagar/vim-table-mode'
 
 " Add plugins to &runtimepath
 call plug#end()

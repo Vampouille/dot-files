@@ -1,3 +1,6 @@
+SSH_AUTH_SOCK=/tmp/ssh-tL756sP2Eahz/agent.3709; export SSH_AUTH_SOCK;
+SSH_AGENT_PID=3710; export SSH_AGENT_PID;
+
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:/usr/local/go/bin:$HOME/go/bin:./node_modules/.bin/:$PATH
 # export PATH=$HOME/git/georchestra/ldapadmin/node:$PATH
@@ -11,14 +14,15 @@ export ZSH=$HOME/.oh-my-zsh
 export SUMMON_PROVIDER=/home/jacroute/bin/summon-gopass
 
 # Configure git
-export GIT_AUTHOR_NAME=Julien Acroute
+export GIT_AUTHOR_NAME="Julien Acroute"
 export GIT_AUTHOR_EMAIL=julien.acroute@camptocamp.com
-export GIT_COMMITTER_NAME=Julien Acroute
+export GIT_COMMITTER_NAME="Julien Acroute"
 export GIT_COMMITTER_EMAIL=julien.acroute@camptocamp.com
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="agnosterzak"
+: ${ZSH_THEME:=agnosterzak}
+#ZSH_THEME="agnosterzak"
 #ZSH_THEME="powerlevel9k/powerlevel9k"
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(battery dir vcs newline context)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs time)
@@ -103,7 +107,7 @@ if [ "$HOST" = "wrk43" ]; then
 fi
 alias rancher-dev=rancher --config ${HOME}/.rancher/cli-caas-dev.camptocamp.com.json
 alias rancher-prod=rancher --config=~/.rancher/cli-caas.camptocamp.com.json
-alias terraform="summon terraform"
+#alias terraform="summon terraform"
 export TF_VAR_key_pair=jacroute
 alias tf=terraform
 alias summon='SUMMON_SESSION=true SUMMON_SECRET_PATH=$(pwd) summon'
@@ -119,3 +123,8 @@ source <(gopass completion zsh)
 export HELM_TILLER_STORAGE=configmap
 
 source /home/jacroute/.local/bin/aws_bash_completer
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /home/jacroute/Téléchargements/mc mc
+
+complete -o nospace -C /home/jacroute/bin/mc mc
