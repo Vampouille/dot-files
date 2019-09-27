@@ -24,8 +24,8 @@ export GIT_COMMITTER_EMAIL=julien.acroute@camptocamp.com
 : ${ZSH_THEME:=agnosterzak}
 #ZSH_THEME="agnosterzak"
 #ZSH_THEME="powerlevel9k/powerlevel9k"
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(battery dir vcs newline context)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs time)
+#POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(battery dir vcs newline context)
+#POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs time)
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -55,7 +55,7 @@ COMPLETION_WAITING_DOTS="true"
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
 # much, much faster.
-DISABLE_UNTRACKED_FILES_DIRTY="true"
+#DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
@@ -115,6 +115,7 @@ alias summon='SUMMON_SESSION=true SUMMON_SECRET_PATH=$(pwd) summon'
 #source /usr/local/bin/fasd
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 unsetopt share_history
+HISTSIZE=5000000
 
 source <(oc completion zsh)
 source <(helm completion zsh)
