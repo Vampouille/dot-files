@@ -17,6 +17,12 @@ if [ $INSTALL_ZSH == "1" ]; then
     ln -s $DOTFILEBASEDIR/dot-oh-my-zsh .oh-my-zsh
   fi
 
+  if [ ! -L .oh-my-zsh/themes/agnosterzak.zsh-theme ]; then
+    echo "No agnosterzak theme"
+    ln -s $DOTFILEBASEDIR/agnosterzak.zsh-theme .oh-my-zsh/themes/agnosterzak.zsh-theme
+
+  fi
+
   if [ ! -r .zshrc ]; then
     echo "No .zshrc in home"
     ln -s $DOTFILEBASEDIR/dot-zshrc .zshrc
