@@ -119,8 +119,8 @@ autocmd FileType python map <buffer> <leader>f :call Flake8()<CR>
 
 
 " Configure gutter shortcut
-map <F10> <Plug>GitGutterNextHunk
-map <F9> <Plug>GitGutterPrevHunk
+map <F10> <Plug>(GitGutterNextHunk)
+map <F9> <Plug>(GitGutterPrevHunk)
 nmap <leader>s <Plug>GitGutterStageHunk
 nmap <leader>u <Plug>GitGutterUndoHunk
 nmap <leader>p <Plug>GitGutterPreviewHunk
