@@ -313,6 +313,13 @@ prompt_aws() {
   esac
 }
 
+prompt_kubectx() {
+  ctx=$(kubectx_prompt_info)
+  if [ -n "$KUBE" ] && [ -n "$ctx" ]; then
+    prompt_segment blue white "%{$fg_bold[pink]%}⎈ $(kubectx_prompt_info)%{$fg_no_bold[pink]%}"
+  fi
+}
+
 ## Main prompt
 build_prompt() {
   RETVAL=$?
@@ -324,6 +331,7 @@ build_prompt() {
   prompt_aws
   prompt_dir
   prompt_git
+  prompt_kubectx
 #  prompt_bzr
 #  prompt_hg
   OLD_BG=${CURRENT_BG}
