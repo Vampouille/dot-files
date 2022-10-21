@@ -2,6 +2,9 @@
 call plug#begin('~/.vim/plugged')
 
 " Shorthand notation; fetches https://github.com/vim-airline/vim-airline
+" yaml completion
+"Plug 'Yggdroot/indentLine'
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
@@ -33,7 +36,7 @@ call plug#end()
 set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
 set number
-set relativenumber
+"set relativenumber
 set scrolloff=5
 set mouse+=a
 set ttymouse=xterm2
@@ -110,7 +113,7 @@ nmap <leader>8 :set shiftwidth=8<CR>:set tabstop=8<CR>:set softtabstop=8<CR>:set
 
 " Configure flake8
 let no_flake8_maps = 1
-let g:flake8_show_in_gutter=1
+let g:flake8_show_in_gutter=0
 let g:flake8_show_in_file=1
 highlight link Flake8_Error      Error
 highlight link Flake8_Warning    WarningMsg
@@ -132,6 +135,7 @@ au BufRead,BufNewFile *.md setlocal textwidth=80
 au BufRead,BufNewFile *.es6 set syntax=javascript
 
 :command RemoveTraillingSpaces %s/\s\+$//e
+:command Pass read !one-pass
 "
 " Configure nerdtree
 map <leader>t :NERDTreeToggle<CR>
@@ -147,3 +151,11 @@ let g:airline#extensions#ale#enabled = 1
 nnoremap <leader>F :ALEFix<CR>
 " let g:ale_linters = { 'javascript': ['standard'], 'css': ['stylelint'] }
 " let g:ale_fixers = { 'javascript': ['standard'], 'css': ['stylelint'] }
+
+" Folding
+"autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab foldmethod=indent
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab autoindent
+autocmd BufWritePre *.yaml,*.yml :retab
+autocmd BufWritePre *.yaml,*.yml :RemoveTraillingSpaces
+
+au BufNewFile,BufRead */.ssh/config.d/* setf sshconfig
