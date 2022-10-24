@@ -196,6 +196,13 @@ prompt_git() {
       mode=" >R>"
     fi
 
+    tag=$(git describe --tags --exact-match 2> /dev/null)
+    if [ -n "$tag" ]; then
+      tag_info=" 🏷 $tag"
+    else
+      tag_info=""
+    fi
+
     setopt promptsubst
     autoload -Uz vcs_info
 
@@ -207,7 +214,7 @@ prompt_git() {
     zstyle ':vcs_info:*' formats ' %u%c'
     zstyle ':vcs_info:*' actionformats ' %u%c'
     vcs_info
-    echo -n "${ref/refs\/heads\//$PL_BRANCH_CHAR }${vcs_info_msg_0_%% }${mode}"
+    echo -n "${ref/refs\/heads\//$PL_BRANCH_CHAR }${vcs_info_msg_0_%% }${tag_info}${mode}"
   fi
 }
 
